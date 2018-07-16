@@ -1,13 +1,13 @@
 export class Services {
-    private static controllers: Map<string, any> = new Map();
+    private static services: Map<string, any> = new Map();
 
     public static store<T>(label:string, ctrl: T) {
-        if(!Services.controllers.has(label)) {
-            Services.controllers.set(label, ctrl);
+        if(!Services.services.has(label)) {
+            Services.services.set(label, ctrl);
         }
     }
     public static get(label:string): any {
-        return Services.controllers.get(label);
+        return Services.services.get(label);
     }
 
 }

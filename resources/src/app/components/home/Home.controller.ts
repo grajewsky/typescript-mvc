@@ -1,20 +1,29 @@
 import { Controller } from "../../../core/controller/Controller";
 import { Path } from "../../../core/annotations/RouteMap";
-import { View } from "../../../view/View";
 import { HomeView } from "./Home.view";
 import { AuthMiddleware } from "../../../core/middleware/AuthMiddleware";
+import { User } from "../auth/domain/User";
+import { UserService } from "../auth/service/UserService";
+
+
 export class HomeController extends Controller {
     protected view: HomeView;
 
+    protected userService: UserService;
+
     constructor(){
         super();
+        this.userService = new UserService(User);
         this.view = new HomeView();
         this.middlewares = [new AuthMiddleware()];
 
     }
     @Path("/home")
-    home() {
+    async home() {
         this.view.getTemplateUrl("/home:index");
+        let user: User = await this.userService.get(1);
+        console.log(user);
+        
         this.view.render();
     }
     @Path("/redirect_example")
